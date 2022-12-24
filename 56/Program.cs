@@ -13,13 +13,9 @@
 
 Console.Clear();
 
-Random rowsRandom = new Random();    // рандомное количество строк
-int valueR = rowsRandom.Next(1, 10);
 
-Random columnsRandom = new Random();        // рандобмное количество столбцов
-int valueC = columnsRandom.Next(1, 10);
 
-int[,] GetMatrix(int rowsCount, int columsCount, int leftRange = 0, int rightRange = 9)
+int[,] GetMatrix(int rowsCount, int columsCount)
 {
    int[,] matr = new int[rowsCount, columsCount];
    Random rand = new Random();
@@ -28,7 +24,7 @@ int[,] GetMatrix(int rowsCount, int columsCount, int leftRange = 0, int rightRan
    {
       for (int j = 0; j < matr.GetLength(1); j++)
       {
-         matr[i, j] = rand.Next(leftRange, rightRange + 1);
+         matr[i, j] = rand.Next(0, 10);
       }
    }
    return matr;
@@ -54,27 +50,39 @@ void PrintMatrix(int[,] matr)
 
 void Summ(int[,] matr)
 {
-   int minSum = 0;
-   int i = 0;
-   while (i < matr.GetLength(0))     // 0 - это строка, 1 - это столбец
+   int minSum = 5000;
+   
+   int g = -1;
+   //      0      3
+   for (int i=0; i < matr.GetLength(0);i++)     // 0 - это строка, 1 - это столбец
    {
       int sum = 0;
-      int maxSum = 5000;
+
 
       for (int j = 0; j < matr.GetLength(1); j++)
-      {
-         sum = sum + j;
-         if (maxSum > sum)
-         {
-            minSum = sum;
-         }
+      {// 3      1         2
+         sum = sum + matr[i, j];
+         //    3        
+
       }
-      i++;
+      if (minSum > sum)
+      {//   3      3
+         minSum = sum;
+         g++;
+      }
+      
    }
-   Console.WriteLine($"Номер строки с наименьшей суммой элементов: строка {i - 1}");
+   Console.WriteLine($"Номер строки с наименьшей суммой элементов: строка {g}");
 }
 
+// int rows = GetNumber("Введите число строк:");
+// int columns = GetNumber("Введите число столбцов:");
 
+Random rowsRandom = new Random();    // рандомное количество строк
+int valueR = rowsRandom.Next(1, 10);
+
+Random columnsRandom = new Random();        // рандомное количество столбцов
+int valueC = columnsRandom.Next(1, 10);
 
 int[,] matrix = GetMatrix(valueR, valueC);
 
